@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party
     'restframework',
+    'auditlog',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # audit
+    'auditlog.middleware.AuditlogMiddleware',
 ]
 
 ROOT_URLCONF = 'favorite_things.urls'
