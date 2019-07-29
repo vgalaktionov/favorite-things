@@ -1,0 +1,27 @@
+{
+  "name": "favorite-things",
+  "version": "1.0.0",
+  "description": "GUI for the favorite-things app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx parcel watch index.html --public-url ./static/",
+    "build": "npx parcel index.html --public-url ./static/"
+  },
+  "author": "Vadim Galaktionov",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "components": "^0.1.0",
+    "vue": "^2.6.10",
+    "vue-hot-reload-api": "^2.3.3"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.0.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "parcel-bundler": "^1.12.3",
+    "prettier": "^1.18.2",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
