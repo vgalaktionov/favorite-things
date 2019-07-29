@@ -25,7 +25,7 @@ SECRET_KEY = 'mv@xl)frg^eibbvhq&mi-h4^@(((j@f96h24$2sb3zwv-l=$l1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['things.localhost']
 
 
 # Application definition
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'favorite_things.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['favorite_things/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,3 +136,7 @@ AUTHENTICATION_BACKENDS = [
     'favorite_things.auth.AdminBackend',
     'favorite_things.auth.DummyBackend'
 ]
+
+APPEND_SLASH = False
+
+LOGOUT_REDIRECT_URL = '/'
