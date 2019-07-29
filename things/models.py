@@ -11,6 +11,9 @@ class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Thing(models.Model):
     title = models.CharField(max_length=200, unique=True)
