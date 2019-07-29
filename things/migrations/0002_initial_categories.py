@@ -8,7 +8,7 @@ INITIAL_NAMES = ('person', 'place', 'food')
 
 def add_initial(apps, _schema_registry):
     Category = apps.get_model('things', 'Category')
-    initial = [Category(name=n) for n in INITIAL_NAMES]
+    initial = [Category(name=n, user=None) for n in INITIAL_NAMES]
     Category.objects.bulk_create(initial)
 
 

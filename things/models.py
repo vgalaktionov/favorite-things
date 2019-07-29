@@ -4,10 +4,12 @@ from django.core.validators import MinLengthValidator, MinValueValidator
 
 from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
+from django.contrib.auth import get_user_model
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
 
 
 class Thing(models.Model):
@@ -19,9 +21,10 @@ class Thing(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     audit_log = AuditlogHistoryField()
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('category', 'ranking')
+        unique_together = (('category', 'ranking', 'user'), ('category', 'title', 'user'))
 
 
 auditlog.register(Thing, exclude_fields=['created_date', 'modified_date'])
