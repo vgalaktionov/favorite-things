@@ -7,7 +7,7 @@ from auditlog.registry import auditlog
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
 
 class Thing(models.Model):
