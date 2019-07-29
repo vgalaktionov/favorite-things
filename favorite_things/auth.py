@@ -26,14 +26,13 @@ class AdminBackend:
 class DummyBackend:
     def authenticate(self, request, username=None, password=None):
         if username:
-            return self.get_user(username=username)
+            user, _ = User.objects.get_or_create(
+                username=username,
+                is_staff=False,
+                is_superuser=False
+            )
+            return user
         return None
 
-    def get_user(self, _id=None, username=None):
-        """Id is unused and just there to conform to the interface."""
-        user, _ = User.objects.get_or_create(
-            username=username,
-            is_staff=False,
-            is_superuser=False
-        )
-        return user
+    def get_user(self, id):
+        return User.objects.get(id=id)
