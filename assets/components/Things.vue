@@ -25,25 +25,30 @@ export default {
   components: { Thing },
   data() {
     return {
-      things: [],
       searchTerm: null
     }
   },
-  async mounted() {
-    try {
-      const { data } = await api.get("/api/things/")
-      this.things = data
-    } catch (error) {
-      console.error(error)
-    }
-  },
   computed: {
+    things() {
+      return this.$store.state.things || []
+    },
+    selectedCategories() {
+      return this.$store.getters.selectedCategories || []
+    },
     filteredThings() {
-      if (!this.searchTerm) return this.things
-      const regex = new RegExp(this.searchTerm)
-      return this.things.filter(({ title, description }) => {
-        return regex.test(title) || regex.test(description)
-      })
+      let filtered = this.things
+      if (this.selectedCategories.length) {
+        filtered = filtered.filter(({ category }) =>
+          this.selectedCategories.includes(category)
+        )
+      }
+      if (this.searchTerm) {
+        const regex = new RegExp(this.searchTerm)
+        filtered = filtered.filter(({ title, description }) => {
+          return regex.test(title) || regex.test(description)
+        })
+      }
+      return filtered
     }
   }
 }

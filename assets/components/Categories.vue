@@ -22,7 +22,7 @@
           type="text"
           placeholder="Add new categories..."
           v-model="newCategory"
-          @keyup.enter="addNewCategory"
+          @keyup.enter="() => addNewCategory(newCategory)"
         />
       </div>
     </div>
@@ -30,41 +30,22 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
 import api from "../api"
 
 export default {
   data() {
     return {
-      categories: [],
       newCategory: null
     }
   },
-  async mounted() {
-    try {
-      const { data } = await api.get("/api/categories/")
-      this.categories = data
-    } catch (error) {
-      console.error(error)
+  computed: {
+    categories() {
+      return this.$store.state.categories || []
     }
   },
   methods: {
-    async addNewCategory() {
-      try {
-        await api.post("/api/categories/", { name: this.newCategory })
-        this.categories.push({ name: this.newCategory, user: window.userID })
-        this.newCategory = null
-      } catch (error) {
-        console.error(error)
-      }
-    },
-    async removeCategory(idToRemove) {
-      try {
-        await api.delete(`/api/categories/${idToRemove}/`)
-        this.categories = this.categories.filter(({ id }) => id !== idToRemove)
-      } catch (error) {
-        console.error(error)
-      }
-    }
+    ...mapActions(["addNewCategory", "removeCategory"])
   }
 }
 </script>
