@@ -1,3 +1,4 @@
+import json
 from rest_framework import serializers
 
 from things.models import Category, Thing
@@ -25,10 +26,17 @@ class ThingSerializer(serializers.ModelSerializer, CreateWithUserMixin):
     )
     metadata = serializers.JSONField()
     user = serializers.PrimaryKeyRelatedField(required=False, read_only=True)
+    audit_log = serializers.SerializerMethodField()
 
     class Meta:
         model = Thing
-        read_only_fields = ["created_date", "modified_date", "user", "category_string"]
+        read_only_fields = [
+            "created_date",
+            "modified_date",
+            "user",
+            "category_string",
+            "audit_log",
+        ]
         fields = [
             "id",
             "title",
@@ -37,3 +45,13 @@ class ThingSerializer(serializers.ModelSerializer, CreateWithUserMixin):
             "metadata",
             "category",
         ] + read_only_fields
+
+    def get_audit_log(self, obj):
+        return [
+            {
+                "action": le.get_action_display(),
+                "changes": json.loads(le.changes),
+                "timestamp": "le.timestamp",
+            }
+            for le in obj.audit_log.all()
+        ]
