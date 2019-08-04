@@ -13,7 +13,7 @@ class OwnItemsPermission(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if obj.user is None:
-            return request.method not in ('PUT', 'POST', 'PATCH', 'DELETE')
+            return request.method not in ("PUT", "POST", "PATCH", "DELETE")
         return obj.user == request.user
 
 
@@ -24,8 +24,11 @@ class ForUserMixin:
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
 
+    def get_serializer_context(self):
+        return {"request": self.request}
 
-class CategoryViewSet(ModelViewSet, ForUserMixin):
+
+class CategoryViewSet(ForUserMixin, ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [OwnItemsPermission]
 
@@ -33,7 +36,7 @@ class CategoryViewSet(ModelViewSet, ForUserMixin):
         return Category.objects.filter(Q(user=self.request.user) | Q(user__isnull=True))
 
 
-class ThingViewSet(ModelViewSet, ForUserMixin):
+class ThingViewSet(ForUserMixin, ModelViewSet):
     serializer_class = ThingSerializer
     permission_classes = [OwnItemsPermission]
 
