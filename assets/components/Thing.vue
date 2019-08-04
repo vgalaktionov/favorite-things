@@ -29,8 +29,14 @@
 </template>
 
 <script>
+import AddEditThing from "./AddEditThing"
 export default {
-  props: ["thingData"]
+  props: ["thingData"],
+  methods: {
+    edit() {
+      this.$store.commit("setShowModal", { show: true, edit: true })
+    }
+  }
 }
 </script>
 
@@ -46,5 +52,9 @@ dd {
 }
 dt {
   clear: both;
+}
+
+.card {
+  margin-bottom: 1rem;
 }
 </style>

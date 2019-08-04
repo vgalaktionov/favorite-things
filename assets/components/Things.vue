@@ -13,6 +13,16 @@
         </span>
       </p>
     </div>
+    <div class="is-clearfix">
+      <button class="button is-primary is-pulled-right" @click="add">
+        Add New Thing &nbsp;
+        <span class="icon is-right">
+          <i class="fas fa-plus"></i>
+        </span>
+      </button>
+      <br />
+      <br />
+    </div>
     <Thing v-for="thing in filteredThings" :key="thing.id" :thing-data="thing" />
   </div>
 </template>
@@ -48,7 +58,19 @@ export default {
           return regex.test(title) || regex.test(description)
         })
       }
+      filtered.sort((first, second) => {
+        if (first.ranking < second.ranking) {
+          return -1
+        } else if (first.ranking > second.ranking) {
+          return 1
+        } else return 0
+      })
       return filtered
+    }
+  },
+  methods: {
+    add() {
+      this.$store.commit("setShowModal", { show: true, edit: false })
     }
   }
 }

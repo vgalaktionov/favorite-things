@@ -8,6 +8,8 @@ const createStore = () => new Vuex.Store({
   state: {
     categories: [],
     things: [],
+    showModal: false,
+    editingThing: null
   },
   getters: {
     selectedCategories(state) {
@@ -20,14 +22,24 @@ const createStore = () => new Vuex.Store({
     },
     setThings(state, { things }) {
       state.things = things
-    }
+    },
+    setShowModal(state, { show, editing }) {
+      state.showModal = show
+      state.editingThing = editing
+    },
   },
   actions: {
-    async initialFetch(context) {
+    async fetchCategories(context) {
       try {
         const { data: categories } = await api.get("/api/categories/")
-        const { data: things } = await api.get("/api/things/")
         context.commit('setCategories', { categories })
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async fetchThings(context) {
+      try {
+        const { data: things } = await api.get("/api/things/")
         context.commit('setThings', { things })
       } catch (error) {
         console.error(error)
@@ -36,12 +48,7 @@ const createStore = () => new Vuex.Store({
     async addNewCategory(context, newCategory) {
       try {
         await api.post("/api/categories/", { name: newCategory })
-        context.commit("setCategories", {
-          categories: [
-            ...context.state.categories,
-            { name: newCategory, user: window.userID }
-          ]
-        })
+        context.dispatch("fetchCategories")
       } catch (error) {
         console.error(error)
       }

@@ -8,6 +8,7 @@
     <div class="column">
       <Things />
     </div>
+    <AddEditThing />
   </div>
 </template>
 
@@ -16,15 +17,18 @@ import { mapState } from "vuex"
 import Vue from "vue"
 import Categories from "./Categories"
 import Things from "./Things"
+import AddEditThing from "./AddEditThing"
 
 export default {
+  name: "App",
   components: {
     Categories,
-    Things
+    Things,
+    AddEditThing
   },
   created() {
-    this.$store.dispatch("initialFetch")
-    this.$forceUpdate()
+    this.$store.dispatch("fetchCategories")
+    this.$store.dispatch("fetchThings")
   }
 }
 </script>
