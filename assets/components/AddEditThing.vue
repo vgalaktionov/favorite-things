@@ -93,9 +93,9 @@ export default {
         this.$store.state.things.find(
           t => t.id === this.$store.state.editingThing
         ) || null
-      // if (thing) {
-      //   Object.assign(this, thing)
-      // }
+      if (thing) {
+        Object.assign(this, thing)
+      }
       return thing
     }
   },
@@ -109,15 +109,20 @@ export default {
       this.$store.commit("setShowModal", { show: false, edit: false })
     },
     async submit() {
+      const payload = {
+        id: this.id,
+        title: this.title,
+        description: this.description,
+        category: this.category,
+        ranking: this.ranking,
+        metadata: JSON.parse(this.metadata)
+      }
       try {
-        await api.post("/api/things/", {
-          id: this.id,
-          title: this.title,
-          description: this.description,
-          category: this.category,
-          ranking: this.ranking,
-          metadata: JSON.parse(this.metadata)
-        })
+        if (this.editingThing) {
+          await api.put(`/api/things/${this.id}/`, payload)
+        } else {
+          await api.post("/api/things/", payload)
+        }
       } catch (error) {
         console.error(error)
       }

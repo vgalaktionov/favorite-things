@@ -25,16 +25,40 @@
         <time>{{ new Date(thingData.modified_date).toLocaleString() }}</time>
       </div>
     </div>
+    <footer class="card-footer">
+      <a class="card-footer-item" @click="() => edit(thingData.id)">
+        Edit
+        <span class="icon is-right">
+          <i class="fas fa-edit"></i>
+        </span>
+      </a>
+      <a class="card-footer-item has-text-danger" @click="() => remove(thingData.id)">
+        Delete
+        <span class="icon is-right">
+          <i class="fas fa-times"></i>
+        </span>
+      </a>
+    </footer>
   </div>
 </template>
 
 <script>
 import AddEditThing from "./AddEditThing"
+import api from "../api"
+
 export default {
   props: ["thingData"],
   methods: {
-    edit() {
-      this.$store.commit("setShowModal", { show: true, edit: true })
+    edit(id) {
+      this.$store.commit("setShowModal", { show: true, editing: id })
+    },
+    async remove(id) {
+      try {
+        await api.delete(`/api/things/${id}/`)
+        this.$store.dispatch("fetchThings")
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

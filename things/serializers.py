@@ -30,6 +30,7 @@ class ThingSerializer(serializers.ModelSerializer, CreateWithUserMixin):
         model = Thing
         read_only_fields = ["created_date", "modified_date", "user", "category_string"]
         fields = [
+            "id",
             "title",
             "description",
             "ranking",
