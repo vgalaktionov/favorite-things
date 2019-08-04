@@ -17,7 +17,9 @@ class Category(models.Model):
 
 class Thing(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    description = models.TextField(null=True, blank=True, validators=[MinLengthValidator(10)])
+    description = models.TextField(
+        null=True, blank=True, validators=[MinLengthValidator(10)]
+    )
     ranking = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     metadata = JSONField(default=dict)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
@@ -27,7 +29,13 @@ class Thing(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = (('category', 'ranking', 'user'), ('category', 'title', 'user'))
+        unique_together = (
+            ("category", "ranking", "user"),
+            ("category", "title", "user"),
+        )
+
+    def __str__(self):
+        return f"Thing '{self.title}' for user {self.user}"
 
 
-auditlog.register(Thing, exclude_fields=['created_date', 'modified_date'])
+auditlog.register(Thing, exclude_fields=["created_date", "modified_date"])
