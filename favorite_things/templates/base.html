@@ -23,6 +23,11 @@
               Favorite Things
             </h1>
           </div>
+          {% if request.user %}
+          <div class="column is-2 is-offset-2">
+            <a href="/auth/logout" class="button is-pulled-right">Logout</a>
+          </div>
+          {% endif %}
         </div>
         {% block content %} {% endblock content %}
       </div>
