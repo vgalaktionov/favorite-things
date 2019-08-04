@@ -22,7 +22,7 @@
           type="text"
           placeholder="Add new categories..."
           v-model="newCategory"
-          @keyup.enter="() => addNewCategory(newCategory)"
+          @keyup.enter="add"
         />
       </div>
     </div>
@@ -45,7 +45,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["addNewCategory", "removeCategory"])
+    ...mapActions(["addNewCategory", "removeCategory"]),
+    add() {
+      this.addNewCategory(this.newCategory)
+      this.newCategory = null
+    }
   }
 }
 </script>
