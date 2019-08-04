@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div class="is-clearfix">
+      <button class="button is-primary is-pulled-right" @click="add">
+        Add New Thing &nbsp;
+        <span class="icon is-right">
+          <i class="fas fa-plus"></i>
+        </span>
+      </button>
+      <br />
+      <br />
+    </div>
     <div class="field">
       <p class="control has-icons-right">
         <input
@@ -12,16 +22,6 @@
           <i class="fas fa-search"></i>
         </span>
       </p>
-    </div>
-    <div class="is-clearfix">
-      <button class="button is-primary is-pulled-right" @click="add">
-        Add New Thing &nbsp;
-        <span class="icon is-right">
-          <i class="fas fa-plus"></i>
-        </span>
-      </button>
-      <br />
-      <br />
     </div>
     <Thing v-for="thing in filteredThings" :key="thing.id" :thing-data="thing" />
   </div>
