@@ -12,12 +12,14 @@
           <div class="control">
             <input class="input" type="text" placeholder="Title" v-model="title" />
           </div>
+          <p class="help is-danger" v-if="titleError">{{ titleError }}</p>
         </div>
         <div class="field">
           <label class="label">Description</label>
           <div class="control">
             <textarea class="textarea" placeholder="Description" v-model="description"></textarea>
           </div>
+          <p class="help is-danger" v-if="descriptionError">{{ descriptionError }}</p>
         </div>
         <div class="field">
           <label class="label">Category</label>
@@ -32,17 +34,20 @@
               </select>
             </div>
           </div>
+          <p class="help is-danger" v-if="categoryError">{{ categoryError }}</p>
         </div>
         <div class="field">
           <label class="label">Ranking</label>
           <div class="control">
             <input type="number" class="input" v-model="ranking" />
           </div>
+          <p class="help is-danger" v-if="rankingError">{{ rankingError }}</p>
         </div>
         <div class="field">
           <label class="label">Metadata</label>
           <div class="control">
             <Editor
+              v-if="showModal"
               @init="editorInit"
               lang="json"
               theme="xcode"
@@ -52,7 +57,7 @@
             />
           </div>
           <p class="help">Please enter valid JSON.</p>
-        </div>
+          <p class="help is-danger" v-if="metadataError">{{ metadataError }}</p>
       </section>
       <footer class="modal-card-foot">
         <button class="button is-success" @click="submit">Save</button>
@@ -71,11 +76,16 @@ export default {
     return {
       edit: false,
       id: null,
-      title: "",
-      description: "",
+      title: null,
+      description: null,
       ranking: null,
       category: null,
-      metadata: ""
+      metadata: null,
+      titleError: null,
+      descriptionError: null,
+      rankingError: null,
+      categoryError: null,
+      metadataError: null
     }
   },
   components: {
@@ -109,6 +119,13 @@ export default {
       this.$store.commit("setShowModal", { show: false, edit: false })
     },
     async submit() {
+      // reset errors
+      for (const key of Object.keys(this)) {
+        if (key.endsWith('Error')) {
+          this[key] = null
+        }
+      }
+
       const payload = {
         id: this.id,
         title: this.title,
@@ -117,17 +134,26 @@ export default {
         ranking: this.ranking,
         metadata: JSON.parse(this.metadata)
       }
+
       try {
+        // create / update
         if (this.editingThing) {
           await api.put(`/api/things/${this.id}/`, payload)
         } else {
           await api.post("/api/things/", payload)
         }
+        this.$store.dispatch("fetchThings")
+        this.$store.commit("setShowModal", { show: false, edit: false })
       } catch (error) {
-        console.error(error)
+        // propagate validation errors
+        if (error.response && error.response.status === 400) {
+          for (const [field, messages] of Object.entries(error.response.data)) {
+            this[`${field}Error`] = Array.isArray(messages) ? messages.join('\n') : messages
+          }
+        } else {
+          console.error(error)
+        }
       }
-      this.$store.dispatch("fetchThings")
-      this.$store.commit("setShowModal", { show: false, edit: false })
     }
   }
 }
