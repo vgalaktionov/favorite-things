@@ -18,6 +18,20 @@
         </em>
         <div class="is-clearfix"></div>
         <br />
+        <details>
+          <summary>
+            <strong>Audit Log</strong>
+          </summary>
+          <br />
+          <AuditLogEntry
+            v-for="(log, index) in thingData.audit_log"
+            :key="log.timestamp"
+            :log-entry="log"
+            :index="index"
+          />
+        </details>
+        <div class="is-clearfix"></div>
+        <br />
         <strong>Created:</strong>
         <time>{{ new Date(thingData.created_date).toLocaleString() }}</time>
         &nbsp;&nbsp;&nbsp;
@@ -43,11 +57,15 @@
 </template>
 
 <script>
-import AddEditThing from "./AddEditThing"
+import AuditLogEntry from "./AuditLogEntry"
+
 import api from "../api"
 
 export default {
   props: ["thingData"],
+  components: {
+    AuditLogEntry
+  },
   methods: {
     edit(id) {
       this.$store.commit("setShowModal", { show: true, editing: id })

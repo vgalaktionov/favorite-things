@@ -51,7 +51,7 @@ class ThingSerializer(serializers.ModelSerializer, CreateWithUserMixin):
             {
                 "action": le.get_action_display(),
                 "changes": json.loads(le.changes),
-                "timestamp": "le.timestamp",
+                "timestamp": le.timestamp,
             }
             for le in obj.audit_log.all()
         ]
