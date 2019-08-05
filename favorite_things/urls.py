@@ -26,13 +26,13 @@ from .views import CustomLoginView, FrontendView
 
 
 router = DefaultRouter()
-router.register('categories', CategoryViewSet, 'categories')
-router.register('things', ThingViewSet, 'things')
+router.register("categories", CategoryViewSet, "categories")
+router.register("things", ThingViewSet, "things")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('auth/login', CustomLoginView.as_view(), name='login'),
-    path('auth/logout', LogoutView.as_view(), name='logout'),
-    path('', FrontendView.as_view(), name='index'),
+    path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),
+    path("auth/login", CustomLoginView.as_view(), name="login"),
+    path("auth/logout", LogoutView.as_view(), name="logout"),
+    path("", FrontendView.as_view(), name="index"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

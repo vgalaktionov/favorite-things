@@ -1,0 +1,22 @@
+{
+    "production": {
+        "aws_region": "eu-central-1",
+        "django_settings": "favorite_things.settings",
+        "profile_name": null,
+        "project_name": "favorite-things",
+        "runtime": "python3.7",
+        "s3_bucket": "zappa-j8nt4gf6d",
+        "exclude": ["assets"],
+        "environment_variables": {
+            "PROD": "1"
+        },
+        "vpc_config": {
+            "SubnetIds": [
+                "subnet-72519b18",
+                "subnet-877474fa",
+                "subnet-194e5954"
+            ],
+            "SecurityGroupIds": ["sg-a314c7c0"]
+        }
+    }
+}

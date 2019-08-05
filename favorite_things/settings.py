@@ -23,9 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "mv@xl)frg^eibbvhq&mi-h4^@(((j@f96h24$2sb3zwv-l=$l1"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not bool(os.environ.get("PROD"))
 
-ALLOWED_HOSTS = ["things.localhost"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "things.localhost",
+    "bzksv2i2ae.execute-api.eu-central-1.amazonaws.com",
+]
 
 
 # Application definition
@@ -41,13 +46,14 @@ INSTALLED_APPS = [
     # 3rd party
     "rest_framework",
     "auditlog",
+    "django_s3_storage",
+    "zappa_django_utils",
     # project
     "things",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -85,7 +91,7 @@ WSGI_APPLICATION = "favorite_things.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME", "favorite-things"),
+        "NAME": os.environ.get("DB_NAME", "favorite_things"),
         "USER": os.environ.get("DB_USER", "postgres"),
         "PASSWORD": os.environ.get("DB_PASSWORD", ""),
         "HOST": os.environ.get("DB_HOST", "localhost"),
@@ -123,9 +129,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = "/static/"
 STATICFILES_DIRS = ["assets/dist"]
 STATIC_ROOT = os.path.join(BASE_DIR, "collected_static")
+
+STATIC_S3_BUCKET = "favorite-things-static"
+
+STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
+AWS_S3_BUCKET_NAME_STATIC = STATIC_S3_BUCKET
+
+# These next two lines will serve the static files directly
+# from the s3 bucket
+AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % STATIC_S3_BUCKET
+STATIC_URL = (
+    "https://%s/" % AWS_S3_CUSTOM_DOMAIN if os.environ.get("PROD") else "/static/"
+)
+AWS_S3_MAX_AGE_SECONDS_STATIC = "94608000"
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
