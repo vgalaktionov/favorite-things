@@ -25,6 +25,7 @@
           @keyup.enter="add"
         />
       </div>
+      <p class="help">Press Enter to add the category</p>
     </div>
   </div>
 </template>

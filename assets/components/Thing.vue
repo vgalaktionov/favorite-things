@@ -9,12 +9,12 @@
         <p>{{ thingData.description }}</p>
         <strong>Metadata:</strong>
         <em>
-          <dl v-if="thingData.metadata">
-            <span v-for="(value, key) in JSON.parse(thingData.metadata)" :key="key">
-              <dt>{{ key }}:</dt>
-              <dd>{{ value }}</dd>
-            </span>
-          </dl>
+          <table class="metadata" v-if="thingData.metadata">
+            <tr v-for="(value, key) in JSON.parse(thingData.metadata)" :key="key">
+              <td>{{ key }}:</td>
+              <td>{{ value }}</td>
+            </tr>
+          </table>
         </em>
         <div class="is-clearfix"></div>
         <br />
@@ -23,12 +23,7 @@
             <strong>Audit Log</strong>
           </summary>
           <br />
-          <AuditLogEntry
-            v-for="(log, index) in thingData.audit_log"
-            :key="log.timestamp"
-            :log-entry="log"
-            :index="index"
-          />
+          <AuditLogEntry v-for="log in thingData.audit_log" :key="log.timestamp" :log-entry="log" />
         </details>
         <div class="is-clearfix"></div>
         <br />
@@ -88,12 +83,9 @@ export default {
   margin-right: 1rem;
 }
 
-dt,
-dd {
-  float: left;
-}
-dt {
-  clear: both;
+table.metadata tr td {
+  font-style: italic;
+  border: 0px solid white;
 }
 
 .card {
