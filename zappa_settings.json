@@ -17,6 +17,8 @@
                 "subnet-194e5954"
             ],
             "SecurityGroupIds": ["sg-a314c7c0"]
-        }
+        },
+        "certificate_arn": "arn:aws:acm:us-east-1:158921867277:certificate/9fe24b60-3456-49cb-bd7d-b4bccd130134",
+        "domain": "www.favorite-things.xyz"
     }
 }
