@@ -24,6 +24,15 @@ $ npm install
 
 ## Development
 
+To setup pre-commit linting:
+
+```bash
+cp pre-commit .git/hooks
+chmod +x .git/hooks/pre-commit
+```
+
+Run the application locally:
+
 ```bash
 # in one terminal
 $ source venv/bin/activate
@@ -49,6 +58,7 @@ $ zappa manage production create_admin_user
 ```
 
 Note: the environment variables `DB_PASSWORD` and `DB_HOST` need to be set in the AWS Lambda console.
+Once DNS has been setup in Route53, a custom domain may be used with `zappa certify`.
 
 ## License
 
