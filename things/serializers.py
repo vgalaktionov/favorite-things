@@ -24,7 +24,7 @@ class ThingSerializer(serializers.ModelSerializer, CreateWithUserMixin):
     category_string = serializers.StringRelatedField(
         required=False, read_only=True, source="category"
     )
-    metadata = serializers.JSONField()
+    metadata = serializers.JSONField(required=False)
     user = serializers.PrimaryKeyRelatedField(required=False, read_only=True)
     audit_log = serializers.SerializerMethodField()
 

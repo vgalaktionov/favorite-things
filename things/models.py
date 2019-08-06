@@ -1,21 +1,22 @@
-import json
-
 from django.contrib.auth import get_user_model
-
-# use the custom jsonfield to avoid conflicts with auditlog
-from jsonfield import JSONField
-from django.core.validators import MinLengthValidator, MinValueValidator
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.validators import MinLengthValidator, MinValueValidator
 from django.db import models
 
 from auditlog.models import AuditlogHistoryField
 from auditlog.registry import auditlog
 from dateutil.parser import parse
 
+# use the custom jsonfield to avoid conflicts with auditlog
+from jsonfield import JSONField
+
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        unique_together = (("name", "user"),)
 
     def __str__(self):
         return self.name
