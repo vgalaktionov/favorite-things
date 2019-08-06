@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "auditlog",
     "django_s3_storage",
     "zappa_django_utils",
+    "django_extensions",
     # project
     "things",
 ]
