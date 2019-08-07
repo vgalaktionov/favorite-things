@@ -126,3 +126,5 @@ dmypy.json
 
 # IDE things
 .vscode
+# index.html
+favorite_things/templates/index.html

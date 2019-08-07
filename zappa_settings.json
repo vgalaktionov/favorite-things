@@ -18,7 +18,8 @@
             ],
             "SecurityGroupIds": ["sg-a314c7c0"]
         },
-        "certificate_arn": "arn:aws:acm:us-east-1:158921867277:certificate/9fe24b60-3456-49cb-bd7d-b4bccd130134",
-        "domain": "www.favorite-things.xyz"
+        "certificate_arn": "arn:aws:acm:us-east-1:158921867277:certificate/bef089f7-d3a2-44c5-91e5-130a590e866a",
+        "domain": "favorite-things.name",
+        "route53_enabled": true
     }
 }

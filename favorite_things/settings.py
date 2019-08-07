@@ -29,7 +29,8 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "things.localhost",
-    "bzksv2i2ae.execute-api.eu-central-1.amazonaws.com",
+    "ddl2dcus5j.execute-api.eu-central-1.amazonaws.com",
+    "favorite-things.name",
 ]
 
 
