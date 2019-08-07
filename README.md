@@ -38,14 +38,14 @@ $ npm install
 
 ## Development
 
-To setup pre-commit linting for Python and Javascript with Flake8 and ESLint, respectively:
+#### To setup pre-commit linting for Python and Javascript with Flake8 and ESLint, respectively:
 
 ```bash
 cp pre-commit .git/hooks
 chmod +x .git/hooks/pre-commit
 ```
 
-Run the application locally:
+#### Run the application locally:
 
 ```bash
 # in one terminal
@@ -58,20 +58,20 @@ $ npm run dev
 
 ## Deployment
 
-####1-command deploy:
+#### 1-command deploy:
 
 ```bash
 $ bash deploy.sh
 ```
 
-####When deploying for the first time, the following commands must be ran afterwards:
+#### When deploying for the first time, the following commands must be ran afterwards:
 
 ```bash
 $ zappa manage production create_pg_db
 $ zappa manage production create_admin_user
 ```
 
-Note: the environment variables `DB_PASSWORD` and `DB_HOST` need to be set in the AWS Lambda console.
+**Note:** the environment variables `DB_PASSWORD` and `DB_HOST` need to be set in the AWS Lambda console.
 Once DNS has been setup in Route53, a custom domain may be used with `zappa certify`.
 
 ## License
