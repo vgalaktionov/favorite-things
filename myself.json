@@ -1,0 +1,60 @@
+{
+    "name": "Vadim Galaktionov",
+    "age": 26,
+    "born_in": {
+        "city": "Kiev",
+        "country": "Ukraine"
+    },
+    "lives_in": {
+        "city": "Breda",
+        "country": "The Netherlands"
+    },
+    "background": "masters in business administation",
+    "learned_to_program": "self-taught",
+    "professional_development_experience": "~3.5 years",
+    "remote_experience": true,
+    "current_employer": "ASML",
+    "skillsets": [
+        "backend_web_dev",
+        "frontend_web_dev",
+        "devops",
+        "data_engineering",
+        "systems_architecture",
+        "communication",
+        "mentoring"
+    ],
+    "greatest_weakness": "boredom",
+    "favorite_languages": [
+        "Python 3",
+        "ES6+ / TypeScript",
+        "Go",
+        "Clojure"
+    ],
+    "heard_about_BriteCore": {
+        "at": "EuroPython 2019",
+        "from": "Lennart Regebro"
+    },
+    "passionate_about": {
+        "work": [
+            "distributed systems",
+            "clean code",
+            "performance",
+            "reliability",
+            "simplicity",
+            "pair programming",
+            "code reviews",
+            "CI/CD"
+        ],
+        "life": [
+            "travel",
+            "cinema",
+            "photography",
+            "making music",
+            "listening to music",
+            "good food",
+            "craft beers",
+            "hacking on stuff"
+        ]
+    },
+    "favorite_quote": "If you're the smartest person in the room, you're in the wrong room."
+}
