@@ -2,12 +2,13 @@
 
 > An app to keep track of your favorite things.
 
-The application is deployed at [this URL](https://bzksv2i2ae.execute-api.eu-central-1.amazonaws.com/production)
+The application is deployed at [favorite-things.name](https://favorite-things.name)
 
 Built with:
 
 - Python 3
 - Django
+- ES2018
 - Vue
 - PostgreSQL
 - Zappa
@@ -24,7 +25,7 @@ $ npm install
 
 ## Development
 
-To setup pre-commit linting:
+To setup pre-commit linting for Python and Javascript with Flake8 and ESLint, respectively:
 
 ```bash
 cp pre-commit .git/hooks
