@@ -7,14 +7,27 @@ The application is deployed at [favorite-things.name](https://favorite-things.na
 Built with:
 
 - Python 3
-- Django
+- Django / Django Rest Framework
 - ES2018
-- Vue
+- Vue / Vuex
+- Bulma
 - PostgreSQL
 - Zappa
 - AWS Lambda + RDS + S3
 
-## Install requirements
+## Design notes
+
+- The application consists of a Django/DRF backend and a Vue SPA frontend, backed by PostgreSQL.
+- Although authentication was not a requirement, it helps me properly conceptualize the application so
+  I built a simple username-only "authentication" backend
+- Building an auditing implementation from scratch was not a requirement, so I used an existing library to
+  accomplish this, which allowed me to focus on other parts.
+- As mentioned in the answers.md, enum support in the metadata field is lacking. I found this was a good tradeoff
+  to make, as it allowed to avoid a whole lot of additional complexity and thus time.
+- The deployment is automated as much as possible, although the DNS configuration must be done
+  through the AWS GUI.
+
+## Installation
 
 ```bash
 $ source venv/bin/activate
